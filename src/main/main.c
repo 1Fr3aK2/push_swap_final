@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
         temp_itera = temp_itera->next;
     }
     ft_printf("\n");
-    printf("1 node->number : %d, index: %d\n", a_stack ->number, a_stack->index);
+    /* printf("1 node->number : %d, index: %d\n", a_stack ->number, a_stack->index); */
     if (verify(a_stack) == 1)
     {
         if (size == 2)
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         else if (size <= 5)
             sort_five(&a_stack, &b_stack);
     }
-    printf("1 node->number : %d, index: %d\n", a_stack ->number, a_stack->index);
+    /* printf("1 node->number : %d, index: %d\n", a_stack ->number, a_stack->index); */
     /* ft_printf("counter: %d\n", b_stack->counter); */
     /* int i = verify(a_stack);
     printf("i = %d\n", i);
