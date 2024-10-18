@@ -16,6 +16,8 @@ static void rotate(r_list **stack)
 {
     r_list  *temp;
     r_list  *lastnode;
+    r_list  *current;
+    int     temp_index;
 
     if(!(*stack) || !(*stack) -> next)
         return ;
@@ -27,6 +29,22 @@ static void rotate(r_list **stack)
     lastnode -> next = temp;
     temp -> prev = lastnode;
     temp -> next = NULL; // ultimo node passa a ser o node 1
+
+    //armazenar o primeiro index atual em temp_index;
+    //
+    temp_index = lastnode->index;
+    temp->index = temp_index;
+    current = *stack;
+
+    // Iterar sobre a lista para ajustar os índices
+    while (current)
+    {
+        if (current->number != temp -> number)
+            current -> index--;
+        else
+            return ;
+        current = current->next;
+    }
 }  
 
 void ra(r_list **a_stack)

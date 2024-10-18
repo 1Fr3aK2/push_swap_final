@@ -56,6 +56,8 @@ int main(int argc, char *argv[])
     }
     ft_printf("\n");
     printf("1 node->number : %d, index: %d\n", a_stack ->number, a_stack->index);
+    printf("2 node->number : %d, index: %d\n", a_stack ->next->number, a_stack->next->index);
+    printf("3 node->number : %d, index: %d\n", a_stack ->next-> next->number, a_stack->next-> next->index);
     if (verify(a_stack) == 1)
     {
         if (size == 2)
@@ -66,6 +68,8 @@ int main(int argc, char *argv[])
             sort_five(&a_stack, &b_stack);
     }
     printf("1 node->number : %d, index: %d\n", a_stack ->number, a_stack->index);
+    printf("2 node->number : %d, index: %d\n", a_stack ->next->number, a_stack->next->index);
+    printf("3 node->number : %d, index: %d\n", a_stack ->next-> next->number, a_stack->next-> next->index);
     /* ft_printf("counter: %d\n", b_stack->counter); */
     /* int i = verify(a_stack);
     printf("i = %d\n", i);
