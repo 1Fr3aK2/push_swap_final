@@ -15,7 +15,9 @@ static void reverse(r_list **stack)
 {
     r_list *temp;
     r_list *lastnode;
-    
+    r_list  *current;
+    int     temp_index;
+
     if (!(*stack) || !(*stack)->next)
         return ;
     
@@ -28,7 +30,18 @@ static void reverse(r_list **stack)
     lastnode->next = temp;
     lastnode->prev = NULL;
     temp->prev = lastnode;
+
+    temp_index = temp ->index;
+    lastnode->index = temp_index;
+    current = (*stack)->next;
+    while (current)
+    {
+        current->index++;
+        current = current->next;
+    }
 }
+
+
 
 void rra(r_list **a_stack)
 {
