@@ -22,7 +22,6 @@ static void reverse(r_list **stack)
         return ;
     
     lastnode = (r_list *)ft_lstlast((t_list *)*stack);
-
     if (lastnode->prev)
         lastnode->prev->next = NULL;
     temp = (*stack);
@@ -40,8 +39,6 @@ static void reverse(r_list **stack)
         current = current->next;
     }
 }
-
-
 
 void rra(r_list **a_stack)
 {
