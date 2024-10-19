@@ -96,7 +96,7 @@ void free_split(char **str)
     free(str);
 }
 
-int		find_distance(r_list **stack, int index)
+int		find_distance(r_list **stack, int nb)
 {
 	r_list	*current;
 	int		distance;
@@ -108,7 +108,7 @@ int		find_distance(r_list **stack, int index)
 	distance = 0;
 	while(current)
 	{
-		if (current->index == index)
+		if (current->number == nb)
 			return (distance);
 		else
 		{
@@ -117,23 +117,4 @@ int		find_distance(r_list **stack, int index)
 		}
 	}
 	return (distance);
-}
-
-int		low_index(t_list **stack, int nb)
-{
-	r_list *current;
-	int		lowest;
-
-	if (!(*stack) || !(stack))
-		return (-1);
-	
-	lowest = (*stack)->index;
-	current = (*stack)->next;
-	while(current)
-	{
-		if ((current->index < lowest) && (current->index != nb))
-			lowest = current->index;
-		current = current->next;
-	}
-	return (lowest);
 }

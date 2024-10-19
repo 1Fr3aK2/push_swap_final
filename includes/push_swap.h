@@ -32,7 +32,7 @@ typedef struct p_list
 
 //moves
 /* static void push(r_list **b_stack, r_list **a_stack); */
-void pa(r_list **a_stack, r_list **b_stack);
+void pa(r_list **b_stack, r_list **a_stack);
 void pb(r_list **a_stack, r_list **b_stack);
 
 /* static void reverse(r_list **stack); */
@@ -52,6 +52,7 @@ void rr(r_list **a_stack, r_list **b_stack);
 
 //algorithms
 void sort_three(r_list **stack);
+void    sort_four(r_list **a_stack, r_list **b_stack);
 void sort_five(r_list **a_stack, r_list **b_stack);
 
 //errors
@@ -64,7 +65,7 @@ long	ft_atol(const char *str);
 r_list *high_number(r_list *stack);
 r_list *low_number(r_list *stack); 
 void free_split(char **str);
-int		find_distance(r_list **stack, int index);
+int		find_distance(r_list **stack, int nb);
 
 
 //stacks

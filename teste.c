@@ -1,88 +1,167 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Definindo a estrutura de um nó da lista encadeada
 typedef struct r_list {
-    int number;
-    struct r_list *next;
+    int number;               // Valor do nó
+    struct r_list *next;     // Ponteiro para o próximo nó
 } r_list;
 
-// Função fornecida para comparar os números
-int compare_numbers(r_list **stack) // saber quantos numeros com maior counter existem
-{
-    r_list *current_next;
-    r_list *current_a;
-    int counter;
 
-    if (!(*stack))
-        return 1;
 
-    current_a = (*stack);
-    current_next = (*stack)->next;
-    if (!current_a || !current_next)
-        return 1;
+void ra(r_list **stack) {
+    if (!(*stack) || !(*stack)->next) return;
+    r_list *temp = *stack;
+    *stack = (*stack)->next;
+    temp->next = NULL;
 
-    counter = 0;
-    while (current_next) {
-        if (current_next->number < current_a->number) {
-            counter++;
-            current_next = current_next->next;
-        } else
-            break;
+    r_list *current = *stack;
+    while (current->next) {
+        current = current->next;
     }
-    return counter;
+    current->next = temp;
+    printf("ra\n");
 }
 
-// Função para criar um novo nó na lista
-r_list *create_node(int number) {
-    r_list *new_node = (r_list *)malloc(sizeof(r_list));
-    if (!new_node) {
-        printf("Erro ao alocar memória.\n");
-        exit(1);
-    }
-    new_node->number = number;
-    new_node->next = NULL;
-    return new_node;
-}
-
-// Função para adicionar um nó ao início da lista
-void push(r_list **stack, int number) {
-    r_list *new_node = create_node(number);
-    new_node->next = *stack;
-    *stack = new_node;
-}
-
-// Função para liberar a memória da lista
-void free_list(r_list *stack) {
-    r_list *temp;
+int find_distance(r_list *stack, r_list *lowest) {
+    int distance = 0;
     while (stack) {
-        temp = stack;
+        if (stack == lowest)
+            return distance;
+        distance++;
         stack = stack->next;
-        free(temp);
     }
+    return -1; // Em caso de erro
+}
+
+
+r_list* low_number(r_list *stack) {
+    r_list *lowest_number = stack;
+
+    if (!stack)
+        return NULL;
+    while (stack->next) {
+        stack = stack->next;
+        if (stack->number < lowest_number->number)
+            lowest_number = stack;
+    }
+    return lowest_number;
+}
+
+
+int ft_lstsize(r_list *stack) {
+    int size = 0;
+    while (stack) {
+        size++;
+        stack = stack->next;
+    }
+    return size;
+}
+
+void append(r_list **head, int new_number) {
+    r_list *new_node = (r_list *)malloc(sizeof(r_list));
+    r_list *last = *head;
+
+    new_node->number = new_number;
+    new_node->next = NULL;
+
+    if (*head == NULL) {
+        *head = new_node;
+        return;
+    }
+
+    while (last->next) {
+        last = last->next;
+    }
+    last->next = new_node;
+}
+
+
+
+
+
+
+
+
+void rra(r_list **stack) {
+    if (!(*stack) || !(*stack)->next) return;
+
+    r_list *current = *stack;
+    while (current->next->next) {
+        current = current->next;
+    }
+    r_list *last = current->next;
+    current->next = NULL;
+    last->next = *stack;
+    *stack = last;
+    printf("rra\n");
+}
+
+void    sort_four(r_list **a_stack, r_list **b_stack)
+{
+    int distance;
+    int lst_size;
+    int median;
+    
+    if (!(*a_stack) || !(a_stack))
+        return ;
+    
+    distance = find_distance(*a_stack, low_number(*a_stack));
+    lst_size = ft_lstsize(*a_stack);
+    median = lst_size / 2;
+    
+    while(distance)
+    {
+        if(distance > median)
+        {
+            rra(a_stack);
+            distance = 0;
+        }
+        else
+        {
+            ra(a_stack);
+            distance--;
+        }
+    }
+    
 }
 
 int main() {
-    r_list *stack = NULL;
+    r_list *a_stack = NULL;
+    r_list *b_stack = NULL;
 
-    // Adicionando alguns números à lista
-    push(&stack, 5);
-    push(&stack, 3);
-    push(&stack, 8);
-    push(&stack, 1);
-    push(&stack, 9); // Lista: 9 -> 1 -> 8 -> 3 -> 5
+    // Adicionando alguns números à pilha A
+    append(&a_stack, 598);
+    append(&a_stack, 22);
+    append(&a_stack, 8);
+    append(&a_stack, 33);
 
-    // Chamando a função compare_numbers
-    while (stack)
-    {
-        int result = compare_numbers(&stack);
-        printf("O resultado da comparação é: %d\n", result);
-        stack = stack->next;
+    // Exibindo a pilha A antes da ordenação
+    printf("Pilha A antes da ordenação:\n");
+    r_list *temp = a_stack;
+    while (temp) {
+        printf("%d -> ", temp->number);
+        temp = temp->next;
     }
-    
+    printf("NULL\n");
 
-    // Liberando a memória da lista
-    free_list(stack);
+    // Ordenando os números
+    sort_four(&a_stack, &b_stack);
+
+    // Exibindo a pilha A após a ordenação
+    printf("Pilha A após a ordenação:\n");
+    temp = a_stack;
+    while (temp) {
+        printf("%d -> ", temp->number);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+
+    // Liberar a memória
+    while (a_stack != NULL) {
+        r_list *next = a_stack->next;
+        free(a_stack);
+        a_stack = next;
+    }
 
     return 0;
 }

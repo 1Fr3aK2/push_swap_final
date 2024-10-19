@@ -18,8 +18,7 @@ static void push(r_list **a_stack, r_list **b_stack)
     r_list  *temp_b;
     r_list  *current_a;
     r_list  *current_b;
-    int     temp_index;
-
+    
     if(!(*a_stack))
         return ;
     temp_a = (*a_stack);
