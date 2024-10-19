@@ -1,153 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct r_list {
-    int number;               // Valor do nó
-    struct r_list *next;     // Ponteiro para o próximo nó
+// Estrutura da lista ligada (exemplo simplificado)
+typedef struct s_r_list {
+    int number;
+    struct s_r_list *next;
 } r_list;
 
+// Função para encontrar o maior número na pilha
+int high_number(r_list *stack) {
+    int highest = stack->number;
 
-void append(r_list **head, int new_number) {
-    r_list *new_node = (r_list *)malloc(sizeof(r_list));
-    r_list *last = *head;
-
-    new_node->number = new_number;
-    new_node->next = NULL;
-
-    if (*head == NULL) {
-        *head = new_node;
-        return;
-    }
-
-    while (last->next) {
-        last = last->next;
-    }
-    last->next = new_node;
-}
-
-int ft_lstsize(r_list *stack) {
-    int size = 0;
     while (stack) {
-        size++;
+        if (stack->number > highest)
+            highest = stack->number;
         stack = stack->next;
     }
-    return size;
+    return (highest);
 }
 
-r_list* low_number(r_list *stack) {
-    r_list *lowest_number = stack;
-
-    if (!stack)
-        return NULL;
-    while (stack->next) {
-        stack = stack->next;
-        if (stack->number < lowest_number->number)
-            lowest_number = stack;
-    }
-    return lowest_number;
-}
-
-int find_distance(r_list *stack, int lowest_value) {
-    int distance = 0;
-    while (stack) {
-        if (stack->number == lowest_value)
-            return distance;
-        distance++;
-        stack = stack->next;
-    }
-    return -1; // Em caso de erro
-}
-
-void ra(r_list **stack) {
-    if (!(*stack) || !(*stack)->next) return;
-    r_list *temp = *stack;
-    *stack = (*stack)->next;
-    temp->next = NULL;
-
-    r_list *current = *stack;
-    while (current->next) {
-        current = current->next;
-    }
-    current->next = temp;
-}
-
-void rra(r_list **stack) {
-    if (!(*stack) || !(*stack)->next) return;
-
-    r_list *current = *stack;
-    while (current->next->next) {
-        current = current->next;
-    }
-    r_list *last = current->next;
-    current->next = NULL;
-    last->next = *stack;
-    *stack = last;
-}
-
-void    sort_five(r_list **a_stack, r_list **b_stack)
-{
-    int distance;
-    int median;
+// Função para calcular o número de bits necessários
+int get_bits(r_list **a_stack) {
+    int max_bits;
+    int max_nb;
 
     if (!(*a_stack) || !(a_stack))
-        return;
-
-    // Mover o menor número para o topo
-    distance = find_distance(*a_stack, low_number(*a_stack)->number);
-    median = ft_lstsize(*a_stack) / 2;
-    while(distance)
-    {
-        if (distance > median)
-        {
-            rra(a_stack);
-            distance = find_distance(*a_stack, low_number(*a_stack)->number); 
-        }
-        else
-        {
-            ra(a_stack);
-            distance = find_distance(*a_stack, low_number(*a_stack)->number);
-        }
-    }
+        return (0);
+    max_nb = high_number(*a_stack);  // Encontrar o maior número
+    max_bits = 0;
+    while ((max_nb >> max_bits) != 0)  // Contar os bits
+        max_bits++;
+    return (max_bits);
 }
 
+// Função para criar um novo nó da lista
+r_list *new_node(int number) {
+    r_list *new = (r_list *)malloc(sizeof(r_list));
+    if (!new)
+        return NULL;
+    new->number = number;
+    new->next = NULL;
+    return new;
+}
 
+// Função principal (main)
 int main() {
-    r_list *a_stack = NULL;
-    r_list *b_stack = NULL;
+    // Criar alguns nós na pilha (a_stack)
+    r_list *a_stack = new_node(3);
+    a_stack->next = new_node(7);
+    a_stack->next->next = new_node(50);
+    a_stack->next->next->next = new_node(1);
 
-    // Adicionando alguns números à pilha A
-    append(&a_stack, 5);
-    append(&a_stack, 2);
-    append(&a_stack, 8);
-    append(&a_stack, 1);
-    append(&a_stack, 4);
+    // Calcular o número de bits necessários para o maior número
+    int bits = get_bits(&a_stack);
 
-    // Exibindo a pilha A antes da ordenação
-    printf("Pilha A antes da ordenação:\n");
-    r_list *temp = a_stack;
-    while (temp) {
-        printf("%d -> ", temp->number);
-        temp = temp->next;
-    }
-    printf("NULL\n");
+    // Exibir o resultado
+    printf("O número de bits necessários para representar o maior número: %d\n", bits);
 
-    // Ordenando os números
-    sort_five(&a_stack, &b_stack);
-
-    // Exibindo a pilha A após a ordenação
-    printf("Pilha A após a ordenação:\n");
-    temp = a_stack;
-    while (temp) {
-        printf("%d -> ", temp->number);
-        temp = temp->next;
-    }
-    printf("NULL\n");
-
-    // Liberar a memória
-    while (a_stack != NULL) {
-        r_list *next = a_stack->next;
-        free(a_stack);
-        a_stack = next;
+    // Limpar a memória
+    while (a_stack) {
+        r_list *temp = a_stack;
+        a_stack = a_stack->next;
+        free(temp);
     }
 
     return 0;
