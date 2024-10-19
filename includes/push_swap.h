@@ -64,6 +64,7 @@ long	ft_atol(const char *str);
 r_list *high_number(r_list *stack);
 r_list *low_number(r_list *stack); 
 void free_split(char **str);
+int		find_distance(r_list **stack, int index);
 
 
 //stacks
