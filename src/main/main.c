@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     init_stack(&a_stack, argv, argc);
     size = ft_lstsize((t_list *)a_stack);
 
-    ft_printf("a_stack antes de ordenar: ");
+   /*  ft_printf("a_stack antes de ordenar: ");
     r_list *temp_itera = a_stack; // Create a separate variable for iteration
     while (temp_itera)
     {
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     printf("1 node->number : %d, index: %d\n", a_stack ->number, a_stack->index);
     printf("2 node->number : %d, index: %d\n", a_stack ->next->number, a_stack->next->index);
     printf("3 node->number : %d, index: %d\n", a_stack ->next-> next->number, a_stack->next-> next->index);
-    printf("4 node->number : %d, index: %d\n", a_stack ->next-> next->next->number, a_stack->next-> next->next->index);
+    printf("4 node->number : %d, index: %d\n", a_stack ->next-> next->next->number, a_stack->next-> next->next->index); */
     if (verify(a_stack) == 1)
     {
         if (size == 2)
@@ -67,10 +67,12 @@ int main(int argc, char *argv[])
             sort_three(&a_stack);
         else if (size == 4)
             sort_four(&a_stack, &b_stack);
-        else if (size <= 5)
+        else if (size == 5)
             sort_five(&a_stack, &b_stack);
+        else
+            radix(&a_stack, &b_stack);
     }
-    printf("1 node->number : %d, index: %d\n", a_stack ->number, a_stack->index);
+    /* printf("1 node->number : %d, index: %d\n", a_stack ->number, a_stack->index);
     printf("2 node->number : %d, index: %d\n", a_stack ->next->number, a_stack->next->index);
     printf("3 node->number : %d, index: %d\n", a_stack ->next-> next->number, a_stack->next-> next->index);
     printf("4 node->number : %d, index: %d\n", a_stack ->next-> next->next->number, a_stack->next-> next->next->index);
@@ -90,7 +92,7 @@ int main(int argc, char *argv[])
         ft_printf("%d ", temp_iteraaa->number);
         temp_iteraaa = temp_iteraaa->next;
     }
-    ft_printf("\n");
+    ft_printf("\n"); */
 
     if (split_argv)
         free_split(split_argv);

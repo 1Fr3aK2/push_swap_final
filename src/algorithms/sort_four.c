@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 02:14:55 by rafael            #+#    #+#             */
-/*   Updated: 2024/10/19 03:25:20 by rafael           ###   ########.fr       */
+/*   Updated: 2024/10/19 04:49:39 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void    sort_four(r_list **a_stack, r_list **b_stack)
     pb(a_stack, b_stack);
     sort_three(a_stack);
     pa(b_stack, a_stack);
-    printf("sort_four donne\n");
+    /* printf("sort_four donne\n"); */
 }
