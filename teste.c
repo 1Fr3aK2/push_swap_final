@@ -21,16 +21,16 @@ int high_number(r_list *stack) {
 
 // Função para calcular o número de bits necessários
 int get_bits(r_list **a_stack) {
+     r_list  *number_bits;
     int max_bits;
     int max_nb;
-
+    
     if (!(*a_stack) || !(a_stack))
-        return (0);
-    max_nb = high_number(*a_stack);  // Encontrar o maior número
-    max_bits = 0;
-    while ((max_nb >> max_bits) != 0)  // Contar os bits
-        max_bits++;
-    return (max_bits);
+        return (-1);
+    number_bits = high_number((&a_stack));
+    max_nb = number_bits->number;
+    printf("%d\n", max_nb);
+    return 0;
 }
 
 // Função para criar um novo nó da lista
